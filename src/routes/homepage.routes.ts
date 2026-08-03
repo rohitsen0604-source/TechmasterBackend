@@ -38,11 +38,11 @@ const defaultHomepageData = {
     highlightedHeading: 'Same Obsession.',
     subHeading: "We're just getting started / Five channels today. A Media Empire in Motion.",
     channels: [
-      { id: 'ch-1', name: 'Tech Master', ytSubs: '33M Subs on YT', igFollowers: '5.8M Followers on IG' },
-      { id: 'ch-2', name: 'Next Univerz', ytSubs: '5.5M Subs on YT', igFollowers: '' },
-      { id: 'ch-3', name: 'Master Wheels', ytSubs: '4.6M Subs on YT', igFollowers: '1.2M Followers on IG' },
-      { id: 'ch-4', name: 'Full Circle', ytSubs: '300K Subs on YT', igFollowers: '' },
-      { id: 'ch-5', name: 'Trendz Talk', ytSubs: '', igFollowers: '15K Followers on IG' }
+      { id: 'ch-1', name: 'Tech Master', circleImage: '', logoUrl: '', ytSubs: '33M Subs on YT', igFollowers: '5.8M Followers on IG' },
+      { id: 'ch-2', name: 'Next Univerz', circleImage: '', logoUrl: '', ytSubs: '5.5M Subs on YT', igFollowers: '' },
+      { id: 'ch-3', name: 'Master Wheels', circleImage: '', logoUrl: '', ytSubs: '4.6M Subs on YT', igFollowers: '1.2M Followers on IG' },
+      { id: 'ch-4', name: 'Full Circle', circleImage: '', logoUrl: '', ytSubs: '300K Subs on YT', igFollowers: '' },
+      { id: 'ch-5', name: 'Trendz Talk', circleImage: '', logoUrl: '', ytSubs: '', igFollowers: '15K Followers on IG' }
     ]
   },
   coreValues: {
@@ -58,13 +58,12 @@ const defaultHomepageData = {
     badge: 'GLOBAL REACH & STATISTICS',
     heading: 'Influence & Impact',
     counters: [
-      { id: 'st-1', value: '40M+', label: 'Subscribers' },
-      { id: 'st-2', value: '7M+', label: 'IG Followers' },
-      { id: 'st-3', value: '1B+', label: 'Monthly Views' },
-      { id: 'st-4', value: '2500+', label: 'Videos Published' },
-      { id: 'st-5', value: '500K+', label: 'FB Followers' },
-      { id: 'st-6', value: '25B', label: 'Lifetime Views on YT' },
-      { id: 'st-7', value: '50+', label: 'Global Brand Collaborations' }
+      { id: 'st-1', value: '50M+', label: 'Community' },
+      { id: 'st-2', value: '1B+', label: 'Monthly Views' },
+      { id: 'st-3', value: '2500+', label: 'Videos Published' },
+      { id: 'st-4', value: '500K+', label: 'FB Followers' },
+      { id: 'st-5', value: '25B+', label: 'Lifetime Views on YT' },
+      { id: 'st-6', value: '50+', label: 'Global Brand Collaborations' }
     ]
   },
   brandCollaborations: {

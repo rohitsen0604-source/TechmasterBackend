@@ -5,8 +5,8 @@ export const connectDB = async (): Promise<void> => {
   try {
     const mongoUri = process.env.MONGODB_URI;
     if (!mongoUri) {
-      console.warn("⚠️ MONGODB_URI is not defined in environment variables. Database connection skipped.");
-      return;
+      console.error("MONGODB_URI is not defined in the environment variables.");
+      process.exit(1);
     }
 
     mongoose.connection.on("connected", () => {
@@ -37,5 +37,6 @@ export const connectDB = async (): Promise<void> => {
     }
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
+    process.exit(1);
   }
 };

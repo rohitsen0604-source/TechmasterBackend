@@ -9,6 +9,7 @@ import { ApiResponse } from "./utils/apiResponse";
 import cmsRouter from "./routes";
 import uploadRoutes from "./routes/upload.routes";
 import adminRoutes from "./routes/admin.routes";
+import featuredVideoRoutes from "./routes/featuredVideo.routes";
 
 const app: Express = express();
 
@@ -32,13 +33,14 @@ app.use(
   })
 );
 
-// 3. Rate Limiting (Prevent DDoS/abuse in production)
+// 3. Rate Limiting (Prevent DDoS/abuse in production while allowing seamless reading)
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per window
+  max: 2000, // Increased limit for production clients
   message: "Too many requests from this IP, please try again after 15 minutes",
   standardHeaders: true,
   legacyHeaders: false,
+  skip: (req) => req.method === "GET", // Allow read requests without rate limiting block
 });
 
 if (process.env.NODE_ENV === "production") {
@@ -51,21 +53,16 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 
 // 5. Mount API Routes
+app.use("/api/v1/featured-videos", featuredVideoRoutes);
+app.use("/api/v1/featuredVideos", featuredVideoRoutes);
+app.use("/api/v1/reels", featuredVideoRoutes);
 app.use("/api/v1/cms", cmsRouter);
 app.use("/api/v1", cmsRouter);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/media", uploadRoutes);
 
-// 6. Health & Root Check Routes
-app.get("/", (req: Request, res: Response) => {
-  ApiResponse.success(res, "TechMaster Backend API is running successfully.", {
-    status: "OK",
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
-  });
-});
-
+// 6. Health Check Route
 app.get("/health", (req: Request, res: Response) => {
   ApiResponse.success(res, "TechMaster CMS Backend is healthy.", {
     status: "OK",
