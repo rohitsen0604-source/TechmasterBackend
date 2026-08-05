@@ -124,8 +124,6 @@ router.post("/public/resume", parseDocument, async (req: any, res: any, next: an
   }
 });
 
-import { FeaturedVideo } from "../models/FeaturedVideo";
-
 // Aggregate endpoint for the public frontends
 router.get("/", async (req, res, next) => {
   try {
@@ -157,8 +155,7 @@ router.get("/", async (req, res, next) => {
       privacyPolicy,
       cookiePolicy,
       legalSettings,
-      aboutDocs,
-      featuredVideosDocs
+      aboutDocs
     ] = await Promise.all([
       serviceRepository.find(),
       blogRepository.find(),
@@ -179,8 +176,7 @@ router.get("/", async (req, res, next) => {
       privacyPolicyRepository.find(),
       cookiePolicyRepository.find(),
       legalSettingsRepository.find(),
-      aboutRepository.find(),
-      FeaturedVideo.find({ isActive: true }).sort({ displayOrder: 1, createdAt: -1 })
+      aboutRepository.find()
     ]);
 
     // 3. Construct aggregated CMS state
@@ -195,8 +191,6 @@ router.get("/", async (req, res, next) => {
       collaborations,
       campaigns,
       productLaunches,
-      featuredVideos: featuredVideosDocs,
-      reels: featuredVideosDocs,
       contact: contact[0] || null,
       websiteSettings: websiteSettings[0] || null,
       servicesPage: servicesPage[0] || null,
@@ -225,6 +219,16 @@ router.get("/", async (req, res, next) => {
     ApiResponse.success(res, "CMS aggregate data retrieved successfully", data);
   } catch (error) {
     next(error);
+  }
+});
+
+// GET Featured Videos compatibility route for client website
+router.get("/featured-videos", async (req: any, res: any, next: any) => {
+  try {
+    const cmsDoc = await CMSData.findOne({ key: "featuredVideos" });
+    ApiResponse.success(res, "Featured videos retrieved successfully", cmsDoc ? cmsDoc.value : []);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -377,11 +381,5 @@ router.use("/terms", termsPolicyRoutes);
 router.use("/legal", legalRoutes);
 router.use("/legal-settings", legalRoutes);
 router.use("/legalSettings", legalRoutes);
-
-// Featured Video Showcase routes
-import featuredVideoRoutes from "./featuredVideo.routes";
-router.use("/featured-videos", featuredVideoRoutes);
-router.use("/featuredVideos", featuredVideoRoutes);
-router.use("/reels", featuredVideoRoutes);
 
 export default router;

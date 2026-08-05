@@ -29,7 +29,13 @@ export class UploadController {
         updatedBy: req.user?.id,
       });
 
-      ApiResponse.success(res, "Image uploaded successfully", media, 201);
+      const mediaObj = media.toObject ? media.toObject() : media;
+      ApiResponse.success(res, "Image uploaded successfully", {
+        ...mediaObj,
+        url: result.secure_url,
+        imageUrl: result.secure_url,
+        secure_url: result.secure_url
+      }, 201);
     } catch (error) {
       next(error);
     }
@@ -91,7 +97,13 @@ export class UploadController {
         updatedBy: req.user?.id,
       });
 
-      ApiResponse.success(res, "Video uploaded successfully", media, 201);
+      const mediaObj = media.toObject ? media.toObject() : media;
+      ApiResponse.success(res, "Video uploaded successfully", {
+        ...mediaObj,
+        url: result.secure_url,
+        videoUrl: result.secure_url,
+        secure_url: result.secure_url
+      }, 201);
     } catch (error) {
       next(error);
     }

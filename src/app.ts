@@ -9,7 +9,6 @@ import { ApiResponse } from "./utils/apiResponse";
 import cmsRouter from "./routes";
 import uploadRoutes from "./routes/upload.routes";
 import adminRoutes from "./routes/admin.routes";
-import featuredVideoRoutes from "./routes/featuredVideo.routes";
 
 const app: Express = express();
 
@@ -53,14 +52,13 @@ app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cookieParser());
 
 // 5. Mount API Routes
-app.use("/api/v1/featured-videos", featuredVideoRoutes);
-app.use("/api/v1/featuredVideos", featuredVideoRoutes);
-app.use("/api/v1/reels", featuredVideoRoutes);
 app.use("/api/v1/cms", cmsRouter);
 app.use("/api/v1", cmsRouter);
 app.use("/api/v1/admin", adminRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/media", uploadRoutes);
+app.use("/api/v1/upload", uploadRoutes);
+app.use("/api/v1/media", uploadRoutes);
 
 // 6. Health Check Route
 app.get("/health", (req: Request, res: Response) => {
